@@ -72,4 +72,4 @@ ECommerce is a simple RESTful API using Spring Boot. It allows for User login an
          <li><code>DELETE /categories/{id}</code>: Delete a category.</li>
      </ul>
  </details>
----
+
