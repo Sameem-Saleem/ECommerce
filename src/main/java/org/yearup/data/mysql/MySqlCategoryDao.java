@@ -118,20 +118,16 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
     @Override
     public void delete(int categoryId)
     {
+        // Why is categoryId separate? Why not build into Category?
         // delete category
         String sql = """
-                UPDATE categories
-                SET name = ?,
-                description = ?
+                DELETE FROM categories
                 WHERE categoryId = ?
                 """;
         try (Connection connection = getConnection()){
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, category.getName());
-            preparedStatement.setString(2, category.getDescription());
-            // Why are we passing it in?
-            preparedStatement.setInt(3, categoryId);
-            int rowsAffected = preparedStatement.executeUpdate();
+            preparedStatement.setInt(1, categoryId);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
