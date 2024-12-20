@@ -68,16 +68,24 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
     {
         // create a new category
         String sql = """
-                SELECT *
-                FROM Categories
-                WHERE category_id = ?
+                INSERT INTO categories
+                (name, description)
+                VALUES
+                (?, ?)
                 """;
         try (Connection connection = getConnection()){
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, categoryId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                mapRow(resultSet);
+            preparedStatement.setString(1, category.getName());
+            preparedStatement.setString(2, category.getDescription());
+            int rowsAffected = preparedStatement.executeUpdate();
+            // Is there another way to do this?
+            if (rowsAffected > 0) {
+                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    // check that category id was generated, and get it
+                    int categoryId = generatedKeys.getInt(1);
+                    return getById(categoryId);
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -89,6 +97,22 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
     public void update(int categoryId, Category category)
     {
         // update category
+        String sql = """
+                UPDATE categories
+                SET name = ?,
+                description = ?
+                WHERE categoryId = ?
+                """;
+        try (Connection connection = getConnection()){
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, category.getName());
+            preparedStatement.setString(2, category.getDescription());
+            // Why are we passing it in?
+            preparedStatement.setInt(3, categoryId);
+            int rowsAffected = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
