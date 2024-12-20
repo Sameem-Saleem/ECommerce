@@ -1,6 +1,6 @@
-# EasyShop API
+# ECommerce
 
-EasyShop is a RESTful API designed to handle user authentication, profile management, and e-commerce features like product browsing, category management, cart operations, and order processing. It uses Spring Boot and integrates modern technologies such as JWT, and OAuth2 for GitHub authentication.
+ECommerce is a simple RESTful API using Spring Boot. It allows for User login and viewing categories.
 
 [Link to GitHub Project](#)
 
@@ -37,25 +37,16 @@ EasyShop is a RESTful API designed to handle user authentication, profile manage
    cd ECommerce
    ```
    
-2. Run `create_database.sql`, located in `/backend/database/`, to create and seed the database.
+2. Run `create_database.sql` in API/database.
 
 3. Run the application
 
 ---
 
-## How It Works
-
-[//]: # (![]&#40;&#41;)
-
-- **Authentication**: Supports JWT-based authentication to protect resources and GitHub OAuth2 for login.
-- **E-commerce Frontend**: Provides a clean interface to view API functionality.
-
----
-
 ## Features
 - User Authentication
-  - Register and login using username/password or GitHub Oauth2.
-  - Secure endpoints with JWT.
+  - Register and login using username/password.
+  - Secure endpoints with JWT authentication token.
 ---
 
 ## UML Diagram
@@ -64,5 +55,23 @@ EasyShop is a RESTful API designed to handle user authentication, profile manage
 ---
 
 ## API Endpoints
-
+[//]: # (Auth)
+<details>
+  <summary><strong>Authentication</strong></summary>
+     <ul>
+         <li><code>POST /register</code>: Register a new user.</li>
+         <li><code>POST /login</code>: Authenticate and retrieve JWT.</li>
+     </ul>
+ </details>
+ 
+[//]: # (Categories)
+ <details>
+     <summary><strong>Categories</strong></summary>
+     <ul>
+         <li><code>GET /categories</code>: List all categories.</li>
+         <li><code>POST /categories</code>: Add a new category.</li>
+         <li><code>PUT /categories</code>: Update a category.</li>
+         <li><code>DELETE /categories/{id}</code>: Delete a category.</li>
+     </ul>
+ </details>
 ---
