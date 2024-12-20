@@ -2,8 +2,6 @@
 
 ECommerce is a simple RESTful API using Spring Boot. It allows for User login and viewing categories.
 
-[Link to GitHub Project](#)
-
 ---
 
 ## Table of Contents
